@@ -10,6 +10,8 @@ const PORT = process.env.PORT || 8001;
 
 // Import database connection
 const pool = require('./db');
+// Ensure database schema exists on startup (creates tables if missing)
+require('./setup-db');
 
 // Middleware
 app.use(cors({ origin: '*' }));
