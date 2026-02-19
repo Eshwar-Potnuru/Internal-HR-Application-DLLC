@@ -1,0 +1,17 @@
+{
+  "name": "dllc-hr-full-stack",
+  "version": "1.0.0",
+  "description": "DLLC HR & Payroll - Full Stack",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm start",
+    "frontend": "cd frontend && npm start",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "echo 'Backend ready for deployment'",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
