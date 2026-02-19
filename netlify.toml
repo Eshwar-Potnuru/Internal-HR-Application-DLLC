@@ -8,10 +8,10 @@
   status = 200
 
 [context.production.environment]
-  REACT_APP_BACKEND_URL = "https://your-backend-url-here.com"
+  REACT_APP_BACKEND_URL = "https://internal-hr-application-dllc.onrender.com"
 
 [context.deploy-preview.environment]
-  REACT_APP_BACKEND_URL = "https://your-backend-url-here.com"
+  REACT_APP_BACKEND_URL = "https://internal-hr-application-dllc.onrender.com"
 
 [context.branch-deploy.environment]
-  REACT_APP_BACKEND_URL = "https://your-backend-url-here.com"
+  REACT_APP_BACKEND_URL = "https://internal-hr-application-dllc.onrender.com"
