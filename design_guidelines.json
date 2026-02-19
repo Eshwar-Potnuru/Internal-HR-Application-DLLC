@@ -1,0 +1,178 @@
+{
+  "design_system": {
+    "brand_identity": {
+      "name": "DL Law Corporation",
+      "acronym": "DLLC",
+      "archetype": "Swiss & High-Contrast (Authority) mixed with Organic & Earthy (Trust)",
+      "emotional_tone": "Professional, Trustworthy, Efficient, Elegant, Secure",
+      "keywords": ["Legal", "Corporate", "Secure", "Efficient", "Modern"]
+    },
+    "typography": {
+      "font_family": {
+        "headings": "Playfair Display, serif",
+        "body": "Inter, sans-serif",
+        "mono": "JetBrains Mono, monospace"
+      },
+      "instructions": "Add the following import to index.css: @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@400;500;600;700&display=swap');",
+      "scale": {
+        "h1": "text-4xl font-bold tracking-tight lg:text-5xl font-heading",
+        "h2": "text-3xl font-semibold tracking-tight font-heading",
+        "h3": "text-2xl font-semibold tracking-tight font-heading",
+        "h4": "text-xl font-semibold tracking-tight font-heading",
+        "p": "leading-7 [&:not(:first-child)]:mt-6",
+        "small": "text-sm font-medium leading-none",
+        "muted": "text-sm text-muted-foreground"
+      }
+    },
+    "colors": {
+      "palette": {
+        "primary": {
+          "DEFAULT": "hsl(222, 47%, 11%)", 
+          "foreground": "hsl(210, 40%, 98%)",
+          "description": "Deep Navy Blue - Trust, Authority"
+        },
+        "secondary": {
+          "DEFAULT": "hsl(38, 92%, 50%)",
+          "foreground": "hsl(222, 47%, 11%)",
+          "description": "Gold/Bronze - Prestige, Legal"
+        },
+        "background": "hsl(210, 40%, 98%)",
+        "foreground": "hsl(222, 47%, 11%)",
+        "card": "hsl(0, 0%, 100%)",
+        "card_foreground": "hsl(222, 47%, 11%)",
+        "popover": "hsl(0, 0%, 100%)",
+        "popover_foreground": "hsl(222, 47%, 11%)",
+        "muted": "hsl(210, 40%, 96.1%)",
+        "muted_foreground": "hsl(215.4, 16.3%, 46.9%)",
+        "accent": "hsl(210, 40%, 96.1%)",
+        "accent_foreground": "hsl(222, 47%, 11%)",
+        "destructive": "hsl(0, 84.2%, 60.2%)",
+        "destructive_foreground": "hsl(210, 40%, 98%)",
+        "border": "hsl(214.3, 31.8%, 91.4%)",
+        "input": "hsl(214.3, 31.8%, 91.4%)",
+        "ring": "hsl(222, 47%, 11%)"
+      },
+      "sidebar": {
+        "background": "hsl(222, 47%, 11%)",
+        "foreground": "hsl(210, 40%, 98%)",
+        "active_item_bg": "hsl(217, 33%, 17%)",
+        "active_item_fg": "hsl(38, 92%, 50%)"
+      }
+    },
+    "layout": {
+      "spacing": {
+        "container_padding": "p-6 md:p-8 lg:p-10",
+        "section_gap": "gap-6 md:gap-8",
+        "card_padding": "p-6"
+      },
+      "grid": {
+        "dashboard": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4",
+        "form": "grid grid-cols-1 md:grid-cols-2 gap-6"
+      },
+      "sidebar": {
+        "width": "w-64",
+        "collapsed_width": "w-16",
+        "mobile_behavior": "sheet"
+      }
+    },
+    "components": {
+      "buttons": {
+        "default": "rounded-md shadow-sm hover:shadow-md transition-all duration-200 font-medium",
+        "primary": "bg-primary text-primary-foreground hover:bg-primary/90",
+        "secondary": "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        "outline": "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+        "ghost": "hover:bg-accent hover:text-accent-foreground",
+        "link": "text-primary underline-offset-4 hover:underline"
+      },
+      "cards": {
+        "default": "rounded-lg border bg-card text-card-foreground shadow-sm hover:shadow-md transition-shadow duration-200",
+        "header": "flex flex-col space-y-1.5 p-6",
+        "content": "p-6 pt-0",
+        "footer": "flex items-center p-6 pt-0"
+      },
+      "inputs": {
+        "default": "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+      },
+      "tables": {
+        "wrapper": "relative w-full overflow-auto rounded-md border shadow-sm",
+        "table": "w-full caption-bottom text-sm",
+        "header": "[&_tr]:border-b",
+        "row": "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+        "head": "h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0",
+        "cell": "p-4 align-middle [&:has([role=checkbox])]:pr-0"
+      }
+    },
+    "visual_enhancers": {
+      "shadows": {
+        "sm": "shadow-sm",
+        "md": "shadow-md",
+        "lg": "shadow-lg",
+        "xl": "shadow-xl"
+      },
+      "borders": {
+        "default": "border border-border",
+        "subtle": "border-b border-border/50"
+      },
+      "glassmorphism": {
+        "header": "bg-background/80 backdrop-blur-md border-b border-border/40 sticky top-0 z-50",
+        "overlay": "bg-background/80 backdrop-blur-sm"
+      }
+    },
+    "accessibility": {
+      "contrast": "Ensure text meets WCAG AA standards (4.5:1 for normal text, 3:1 for large text).",
+      "focus_states": "Visible focus rings on all interactive elements.",
+      "aria_labels": "Required for icon-only buttons and inputs."
+    },
+    "motion": {
+      "transitions": "transition-all duration-200 ease-in-out",
+      "hover_lift": "hover:-translate-y-0.5 transition-transform duration-200",
+      "skeleton": "animate-pulse bg-muted rounded-md"
+    },
+    "media": {
+      "images": {
+        "login_bg": "https://images.pexels.com/photos/7841466/pexels-photo-7841466.jpeg",
+        "office_interior": "https://images.pexels.com/photos/5673478/pexels-photo-5673478.jpeg",
+        "logo_placeholder": "https://via.placeholder.com/150x50?text=DLLC+Law",
+        "avatar_placeholder": "https://via.placeholder.com/150",
+        "id_card_bg": "https://via.placeholder.com/300x500?text=ID+Card+Background",
+        "business_card_front": "https://via.placeholder.com/600x350?text=Business+Card+Front",
+        "business_card_back": "https://via.placeholder.com/600x350?text=Business+Card+Back"
+      }
+    },
+    "pages": {
+      "login": {
+        "layout": "Split screen: Left side image (login_bg) with overlay, Right side form.",
+        "features": "JWT Auth, Remember Me, Forgot Password link."
+      },
+      "dashboard": {
+        "layout": "Sidebar + Top Header + Main Content Area.",
+        "widgets": "Role-based. Admin sees all stats. Employee sees personal stats (Leave balance, Attendance).",
+        "style": "Bento grid layout for widgets."
+      },
+      "employees": {
+        "layout": "Data Table with filters (Role, Status, Department).",
+        "actions": "Add Employee (Modal), Edit, Suspend, View Profile."
+      },
+      "id_cards": {
+        "layout": "Card Generator. Preview on left, Controls on right.",
+        "style": "Vertical ID card. Photo top, Name/Role middle, QR/Barcode bottom. DLLC Branding."
+      },
+      "business_cards": {
+        "layout": "Card Generator. Front/Back toggle.",
+        "style": "Horizontal. Corporate Navy Blue background for back, White for front with Gold accents."
+      }
+    },
+    "universal_guidelines": [
+      "Use 'Playfair Display' for all headings (h1-h4) to establish authority.",
+      "Use 'Inter' for all body text and UI elements for clarity.",
+      "Primary color (Navy Blue) should be used for primary actions and active states.",
+      "Secondary color (Gold) should be used sparingly for accents and premium touches.",
+      "Ensure all interactive elements have a 'data-testid' attribute.",
+      "Use 'sonner' for toast notifications.",
+      "Use 'lucide-react' for icons.",
+      "Maintain the existing sidebar navigation structure but update the styling to match the new theme.",
+      "Ensure responsive design: Sidebar collapses to a sheet on mobile.",
+      "Use 'skeleton' loaders for data fetching states."
+    ]
+  }
+}
