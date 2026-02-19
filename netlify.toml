@@ -1,0 +1,17 @@
+[build]
+  command = "cd frontend && npm run build"
+  publish = "frontend/build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[context.production.environment]
+  REACT_APP_BACKEND_URL = "https://your-backend-url-here.com"
+
+[context.deploy-preview.environment]
+  REACT_APP_BACKEND_URL = "https://your-backend-url-here.com"
+
+[context.branch-deploy.environment]
+  REACT_APP_BACKEND_URL = "https://your-backend-url-here.com"
