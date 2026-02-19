@@ -17,7 +17,7 @@ You'll deploy:
 ### Create Database
 1. **Name:** `dllc-hr-db`
 2. **Database:** `dllc_hr`
-3. **User:** `postgres`
+3. **User:** `hr_admin` (⚠️ NOT `postgres` — Render reserves that name)
 4. **Region:** Choose closest to you (e.g., `Oregon` for US)
 5. **Plan:** Free (IPV4 available)
 6. Click **"Create Database"**
@@ -74,7 +74,7 @@ node setup-db.js
 2. Add these variables:
 
 ```
-DATABASE_URL = postgresql://user:password@your-render-host:5432/dllc_hr
+DATABASE_URL = postgresql://hr_admin:password@your-render-host:5432/dllc_hr
 JWT_SECRET = your-secret-key-change-in-production
 NODE_ENV = production
 PORT = 3000
