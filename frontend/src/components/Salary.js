@@ -314,10 +314,10 @@ const Salary = ({ user }) => {
       {/* Create Salary Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 overflow-y-auto">
-          <div className="bg-card p-8 rounded-lg shadow-2xl max-w-3xl w-full m-4 max-h-[90vh] overflow-y-auto">
+          <div className="bg-card p-5 sm:p-8 rounded-lg shadow-2xl max-w-3xl w-full m-4 max-h-[90vh] overflow-y-auto">
             <h3 className="text-2xl font-heading font-bold mb-6">Create Salary Entry</h3>
             <form onSubmit={handleCreate} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-semibold mb-2">Employee *</label>
                   <select
@@ -473,7 +473,7 @@ const Salary = ({ user }) => {
               <div className="border border-border border-t-0 p-6 rounded-b-lg">
                 <h3 className="text-xl font-bold text-center mb-6">PAYSLIP</h3>
                 
-                <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                   <div>
                     <p className="text-sm text-muted-foreground">Employee Name</p>
                     <p className="font-semibold">{selectedPayslip.full_name}</p>

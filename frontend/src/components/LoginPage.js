@@ -54,14 +54,14 @@ const LoginPage = ({ onLogin }) => {
   }, []);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-primary/90 to-primary/80">
-      <div className="bg-card rounded-2xl shadow-2xl p-8 w-full max-w-md">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-primary via-primary/90 to-primary/80 p-4">
+      <div className="bg-card rounded-2xl shadow-2xl p-5 sm:p-8 w-full max-w-md">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <img 
               src="/assets/dllc-logo-v2.png" 
               alt="DLLC Logo" 
-              className="h-28 w-auto object-contain"
+              className="h-20 sm:h-28 w-auto object-contain"
             />
           </div>
           <p className="text-muted-foreground mt-2 text-lg">HR Management Portal</p>

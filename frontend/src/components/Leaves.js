@@ -130,7 +130,7 @@ const Leaves = ({ user }) => {
         <div className="bg-card p-6 rounded-lg border border-border shadow-lg">
           <h3 className="text-xl font-semibold mb-4">Apply for Leave</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-semibold mb-2">Leave Type</label>
                 <select

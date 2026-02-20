@@ -15,6 +15,7 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         margin: 0;
+        overflow-x: hidden;
     }
     
     h1, h2, h3, h4, h5, h6 {
@@ -23,6 +24,20 @@
     
     code {
         font-family: 'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    }
+}
+
+@layer base {
+    img, svg, canvas, video {
+        max-width: 100%;
+        height: auto;
+    }
+
+    table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
