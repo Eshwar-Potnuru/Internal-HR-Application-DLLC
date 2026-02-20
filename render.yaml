@@ -30,4 +30,3 @@ services:
   - type: pserv
     name: dllc-hr-db
     ipAllowList: []
-    postgresVersion: 13
