@@ -134,19 +134,19 @@ const Documents = ({ user }) => {
 
   return (
     <div className="space-y-6 fade-in" data-testid="documents-page">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-heading font-bold">Document Management</h2>
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+        <h2 className="text-2xl sm:text-3xl font-heading font-bold">Document Management</h2>
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
           <select
             value={uploadCategory}
             onChange={(e) => setUploadCategory(e.target.value)}
-            className="px-4 py-2 border border-input rounded-md bg-background"
+            className="w-full sm:w-auto px-4 py-2 border border-input rounded-md bg-background"
           >
             {categories.map(cat => (
               <option key={cat} value={cat}>{cat}</option>
             ))}
           </select>
-          <label className="bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 cursor-pointer flex items-center gap-2">
+          <label className="w-full sm:w-auto bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 cursor-pointer flex items-center justify-center gap-2">
             {uploading ? (
               <>
                 <span className="animate-spin">⏳</span>
@@ -221,7 +221,7 @@ const Documents = ({ user }) => {
 
       {/* Documents Table */}
       <div className="bg-card rounded-lg border border-border shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-border flex justify-between items-center">
+        <div className="px-4 sm:px-6 py-4 border-b border-border flex flex-col sm:flex-row justify-between sm:items-center gap-2">
           <h3 className="text-xl font-semibold">My Documents</h3>
           <p className="text-sm text-muted-foreground">
             {filteredDocuments.length} document{filteredDocuments.length !== 1 ? 's' : ''}
@@ -230,20 +230,20 @@ const Documents = ({ user }) => {
         {paginatedDocuments.length > 0 ? (
           <>
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[900px]">
                 <thead className="bg-muted">
                   <tr>
-                    <th className="px-6 py-3 text-left text-sm font-semibold">File Name</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold">Category</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold">Uploaded By</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold">Date</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold">Actions</th>
+                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">File Name</th>
+                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Category</th>
+                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Uploaded By</th>
+                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Date</th>
+                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {paginatedDocuments.map((doc, idx) => (
                     <tr key={idx} className="border-b border-border hover:bg-muted/50">
-                      <td className="px-6 py-4">
+                      <td className="px-4 sm:px-6 py-4">
                         <div className="flex items-center gap-3">
                           <span className="text-2xl">{getFileIcon(doc.file_type)}</span>
                           <div>
@@ -252,14 +252,14 @@ const Documents = ({ user }) => {
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 sm:px-6 py-4">
                         <span className={`px-2 py-1 rounded text-xs font-semibold ${getCategoryColor(doc.category)}`}>
                           {doc.category || 'General'}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm">{doc.full_name || 'N/A'}</td>
-                      <td className="px-6 py-4 text-sm">{formatDate(doc.uploaded_at)}</td>
-                      <td className="px-6 py-4">
+                      <td className="px-4 sm:px-6 py-4 text-sm">{doc.full_name || 'N/A'}</td>
+                      <td className="px-4 sm:px-6 py-4 text-sm">{formatDate(doc.uploaded_at)}</td>
+                      <td className="px-4 sm:px-6 py-4">
                         <div className="flex gap-3">
                           <button
                             onClick={() => handleDownload(doc)}
@@ -285,11 +285,11 @@ const Documents = ({ user }) => {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="px-6 py-4 border-t border-border flex items-center justify-between">
+              <div className="px-4 sm:px-6 py-4 border-t border-border flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <p className="text-sm text-muted-foreground">
                   Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredDocuments.length)} of {filteredDocuments.length}
                 </p>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}

@@ -167,13 +167,13 @@ const Employees = ({ user }) => {
 
   return (
     <div className="space-y-6 fade-in" data-testid="employees-page">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-heading font-bold">Employee Management</h2>
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+        <h2 className="text-2xl sm:text-3xl font-heading font-bold">Employee Management</h2>
         {['Admin', 'Director'].includes(user.role) && (
           <button
             onClick={() => setShowCreateModal(true)}
             data-testid="create-employee-btn"
-            className="bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 flex items-center gap-2"
+            className="w-full sm:w-auto bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 flex items-center justify-center gap-2"
           >
             <span>➕</span>
             Create Employee
@@ -259,13 +259,13 @@ const Employees = ({ user }) => {
             </select>
           </div>
         </div>
-        <div className="mt-3 flex justify-between items-center">
+        <div className="mt-3 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
           <p className="text-sm text-muted-foreground">
             Showing {filteredEmployees.length} of {employees.length} employees
           </p>
           <button
             onClick={clearFilters}
-            className="px-4 py-2 bg-muted rounded-md text-sm hover:bg-muted/80"
+            className="w-full sm:w-auto px-4 py-2 bg-muted rounded-md text-sm hover:bg-muted/80"
           >
             Clear Filters
           </button>
@@ -275,27 +275,27 @@ const Employees = ({ user }) => {
       {/* Employees Table */}
       <div className="bg-card rounded-lg border border-border shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full min-w-[980px]">
             <thead className="bg-muted border-b border-border">
               <tr>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Employee ID</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Name</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Email</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Role</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Department</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold">Status</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Employee ID</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Name</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Email</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Role</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Department</th>
+                <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Status</th>
                 {['Admin', 'Director', 'HR'].includes(user.role) && (
-                  <th className="px-6 py-3 text-left text-sm font-semibold">Actions</th>
+                  <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Actions</th>
                 )}
               </tr>
             </thead>
             <tbody>
               {paginatedEmployees.map((emp, idx) => (
                 <tr key={idx} className="border-b border-border hover:bg-muted/50">
-                  <td className="px-6 py-4 font-mono text-sm">{emp.employee_id}</td>
-                  <td className="px-6 py-4 font-semibold">{emp.full_name}</td>
-                  <td className="px-6 py-4 text-sm">{emp.email}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 sm:px-6 py-4 font-mono text-sm">{emp.employee_id}</td>
+                  <td className="px-4 sm:px-6 py-4 font-semibold">{emp.full_name}</td>
+                  <td className="px-4 sm:px-6 py-4 text-sm">{emp.email}</td>
+                  <td className="px-4 sm:px-6 py-4">
                     <span className={`px-2 py-1 rounded text-xs font-semibold ${
                       emp.user_role === 'Director' ? 'bg-purple-100 text-purple-800' :
                       emp.user_role === 'Admin' ? 'bg-red-100 text-red-800' :
@@ -306,14 +306,14 @@ const Employees = ({ user }) => {
                       {emp.user_role || emp.role}
                     </span>
                   </td>
-                  <td className="px-6 py-4">{emp.department}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 sm:px-6 py-4">{emp.department}</td>
+                  <td className="px-4 sm:px-6 py-4">
                     <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(emp.status)}`}>
                       {emp.status}
                     </span>
                   </td>
                   {['Admin', 'Director', 'HR'].includes(user.role) && (
-                    <td className="px-6 py-4">
+                    <td className="px-4 sm:px-6 py-4">
                       <div className="flex gap-2 flex-wrap">
                         <button
                           onClick={() => openEditModal(emp)}
@@ -352,11 +352,11 @@ const Employees = ({ user }) => {
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="px-6 py-4 border-t border-border flex items-center justify-between">
+          <div className="px-4 sm:px-6 py-4 border-t border-border flex flex-col md:flex-row md:items-center justify-between gap-3">
             <p className="text-sm text-muted-foreground">
               Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredEmployees.length)} of {filteredEmployees.length} results
             </p>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                 disabled={currentPage === 1}
@@ -364,7 +364,7 @@ const Employees = ({ user }) => {
               >
                 Previous
               </button>
-              <div className="flex gap-1">
+              <div className="flex flex-wrap gap-1">
                 {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
                   let pageNum;
                   if (totalPages <= 5) {

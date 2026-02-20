@@ -97,7 +97,7 @@ const Attendance = ({ user }) => {
 
   return (
     <div className="space-y-6 fade-in" data-testid="attendance-page">
-      <h2 className="text-3xl font-heading font-bold">Attendance Management</h2>
+      <h2 className="text-2xl sm:text-3xl font-heading font-bold">Attendance Management</h2>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -161,7 +161,7 @@ const Attendance = ({ user }) => {
               <button
                 onClick={handleCheckOut}
                 data-testid="checkout-btn"
-                className="bg-destructive text-destructive-foreground px-8 py-3 rounded-md hover:bg-destructive/90 font-semibold"
+                className="w-full sm:w-auto bg-destructive text-destructive-foreground px-6 sm:px-8 py-3 rounded-md hover:bg-destructive/90 font-semibold"
               >
                 🚪 Check Out Now
               </button>
@@ -173,7 +173,7 @@ const Attendance = ({ user }) => {
             )}
           </div>
         ) : (
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <p className="text-lg text-muted-foreground">You haven't checked in today</p>
               <p className="text-sm text-muted-foreground">Click the button to start your workday</p>
@@ -181,7 +181,7 @@ const Attendance = ({ user }) => {
             <button
               onClick={handleCheckIn}
               data-testid="checkin-btn"
-              className="bg-primary text-primary-foreground px-8 py-3 rounded-md hover:bg-primary/90 font-semibold"
+              className="w-full sm:w-auto bg-primary text-primary-foreground px-6 sm:px-8 py-3 rounded-md hover:bg-primary/90 font-semibold"
             >
               🚀 Check In Now
             </button>
@@ -219,12 +219,12 @@ const Attendance = ({ user }) => {
           <div className="flex items-end">
             <button
               onClick={clearFilters}
-              className="px-4 py-2 bg-muted rounded-md text-sm hover:bg-muted/80"
+              className="w-full sm:w-auto px-4 py-2 bg-muted rounded-md text-sm hover:bg-muted/80"
             >
               Clear Filters
             </button>
           </div>
-          <div className="flex items-end justify-end">
+          <div className="flex items-end justify-start md:justify-end">
             <p className="text-sm text-muted-foreground">
               {filteredRecords.length} record{filteredRecords.length !== 1 ? 's' : ''} found
             </p>
@@ -234,23 +234,23 @@ const Attendance = ({ user }) => {
 
       {/* Attendance History */}
       <div className="bg-card rounded-lg border border-border shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-border">
+        <div className="px-4 sm:px-6 py-4 border-b border-border">
           <h3 className="text-xl font-semibold">Attendance History</h3>
         </div>
         {paginatedRecords.length > 0 ? (
           <>
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[920px]">
                 <thead className="bg-muted">
                   <tr>
                     {['Admin', 'Director', 'HR'].includes(user.role) && (
-                      <th className="px-6 py-3 text-left text-sm font-semibold">Employee</th>
+                      <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Employee</th>
                     )}
-                    <th className="px-6 py-3 text-left text-sm font-semibold">Date</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold">Check In</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold">Check Out</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold">Duration</th>
-                    <th className="px-6 py-3 text-left text-sm font-semibold">Status</th>
+                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Date</th>
+                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Check In</th>
+                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Check Out</th>
+                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Duration</th>
+                    <th className="px-4 sm:px-6 py-3 text-left text-sm font-semibold">Status</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -264,12 +264,12 @@ const Attendance = ({ user }) => {
                     return (
                       <tr key={idx} className="border-b border-border hover:bg-muted/50">
                         {['Admin', 'Director', 'HR'].includes(user.role) && (
-                          <td className="px-6 py-4 font-semibold">{record.full_name || 'N/A'}</td>
+                          <td className="px-4 sm:px-6 py-4 font-semibold">{record.full_name || 'N/A'}</td>
                         )}
-                        <td className="px-6 py-4">{new Date(record.date).toLocaleDateString('en-SG', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' })}</td>
-                        <td className="px-6 py-4 font-mono text-green-600">{new Date(record.check_in).toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit' })}</td>
-                        <td className="px-6 py-4 font-mono text-blue-600">{record.check_out ? new Date(record.check_out).toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit' }) : '-'}</td>
-                        <td className="px-6 py-4">
+                        <td className="px-4 sm:px-6 py-4">{new Date(record.date).toLocaleDateString('en-SG', { weekday: 'short', day: '2-digit', month: 'short', year: 'numeric' })}</td>
+                        <td className="px-4 sm:px-6 py-4 font-mono text-green-600">{new Date(record.check_in).toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit' })}</td>
+                        <td className="px-4 sm:px-6 py-4 font-mono text-blue-600">{record.check_out ? new Date(record.check_out).toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit' }) : '-'}</td>
+                        <td className="px-4 sm:px-6 py-4">
                           {duration ? (
                             <span className={`font-semibold ${isLongDay ? 'text-purple-600' : isShortDay ? 'text-orange-600' : 'text-foreground'}`}>
                               {duration}h
@@ -278,7 +278,7 @@ const Attendance = ({ user }) => {
                             <span className="text-muted-foreground">In Progress...</span>
                           )}
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-4 sm:px-6 py-4">
                           {record.check_out ? (
                             <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
                               Complete
@@ -298,11 +298,11 @@ const Attendance = ({ user }) => {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="px-6 py-4 border-t border-border flex items-center justify-between">
+              <div className="px-4 sm:px-6 py-4 border-t border-border flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <p className="text-sm text-muted-foreground">
                   Showing {startIndex + 1} to {Math.min(startIndex + itemsPerPage, filteredRecords.length)} of {filteredRecords.length} records
                 </p>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                     disabled={currentPage === 1}
