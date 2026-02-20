@@ -79,6 +79,12 @@ const AdvancedDashboard = ({ user, onNavigate }) => {
     }
   };
 
+  const handleMetricNavigate = (section) => {
+    if (onNavigate) {
+      onNavigate(section);
+    }
+  };
+
   if (loading) {
     return (
       <div className="space-y-6">
@@ -275,7 +281,10 @@ const AdvancedDashboard = ({ user, onNavigate }) => {
 
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 p-5 rounded-xl shadow-lg text-white hover-lift">
+        <div
+          className="bg-gradient-to-br from-blue-500 to-blue-600 p-5 rounded-xl shadow-lg text-white hover-lift cursor-pointer"
+          onClick={() => handleMetricNavigate('employees')}
+        >
           <div className="flex items-center justify-between">
             <div className="text-3xl">👥</div>
             <div className="text-right">
@@ -288,7 +297,10 @@ const AdvancedDashboard = ({ user, onNavigate }) => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 p-5 rounded-xl shadow-lg text-white hover-lift">
+        <div
+          className="bg-gradient-to-br from-yellow-500 to-yellow-600 p-5 rounded-xl shadow-lg text-white hover-lift cursor-pointer"
+          onClick={() => handleMetricNavigate('leaves')}
+        >
           <div className="flex items-center justify-between">
             <div className="text-3xl">📅</div>
             <div className="text-right">
@@ -299,7 +311,10 @@ const AdvancedDashboard = ({ user, onNavigate }) => {
           <div className="mt-2 text-xs opacity-90">Requires Review</div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500 to-green-600 p-5 rounded-xl shadow-lg text-white hover-lift">
+        <div
+          className="bg-gradient-to-br from-green-500 to-green-600 p-5 rounded-xl shadow-lg text-white hover-lift cursor-pointer"
+          onClick={() => handleMetricNavigate('employees')}
+        >
           <div className="flex items-center justify-between">
             <div className="text-3xl">🏢</div>
             <div className="text-right">
@@ -310,7 +325,10 @@ const AdvancedDashboard = ({ user, onNavigate }) => {
           <div className="mt-2 text-xs opacity-90">Active Departments</div>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-xl shadow-lg text-white hover-lift">
+        <div
+          className="bg-gradient-to-br from-purple-500 to-purple-600 p-5 rounded-xl shadow-lg text-white hover-lift cursor-pointer"
+          onClick={() => handleMetricNavigate('salary')}
+        >
           <div className="flex items-center justify-between">
             <div className="text-3xl">💰</div>
             <div className="text-right">
@@ -321,7 +339,10 @@ const AdvancedDashboard = ({ user, onNavigate }) => {
           <div className="mt-2 text-xs opacity-90">Awaiting Processing</div>
         </div>
 
-        <div className="bg-gradient-to-br from-pink-500 to-pink-600 p-5 rounded-xl shadow-lg text-white hover-lift">
+        <div
+          className="bg-gradient-to-br from-pink-500 to-pink-600 p-5 rounded-xl shadow-lg text-white hover-lift cursor-pointer"
+          onClick={() => handleMetricNavigate('announcements')}
+        >
           <div className="flex items-center justify-between">
             <div className="text-3xl">📢</div>
             <div className="text-right">
