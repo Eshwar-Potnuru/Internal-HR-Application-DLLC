@@ -116,7 +116,7 @@ const IDCards = ({ user }) => {
 
   return (
     <div className="space-y-6 fade-in" data-testid="id-cards-page">
-      <h2 className="text-3xl font-heading font-bold">ID & Business Cards</h2>
+      <h2 className="text-2xl sm:text-3xl font-heading font-bold">ID & Business Cards</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-card p-6 rounded-lg border border-border shadow-sm hover-lift">
@@ -156,26 +156,26 @@ const IDCards = ({ user }) => {
 
       {/* ID Card Preview */}
       {cardData && cardType === 'id' && (
-        <div className="bg-card p-6 rounded-lg border border-border shadow-sm">
-          <div className="flex justify-between items-center mb-4">
+        <div className="bg-card p-4 sm:p-6 rounded-lg border border-border shadow-sm">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-4">
             <h3 className="text-xl font-semibold">Personal ID Card</h3>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <button
                 onClick={() => downloadAsPNG('id-card', `${cardData.employee_id}-id-card`)}
-                className="bg-primary text-primary-foreground px-4 py-2 rounded text-sm hover:bg-primary/90"
+                className="w-full sm:w-auto bg-primary text-primary-foreground px-4 py-2 rounded text-sm hover:bg-primary/90"
               >
                 Download PNG
               </button>
               <button
                 onClick={() => downloadAsPDF('id-card', `${cardData.employee_id}-id-card`, 85.6, 53.98)}
-                className="bg-secondary text-secondary-foreground px-4 py-2 rounded text-sm hover:bg-secondary/80"
+                className="w-full sm:w-auto bg-secondary text-secondary-foreground px-4 py-2 rounded text-sm hover:bg-secondary/80"
               >
                 Download PDF
               </button>
             </div>
           </div>
           
-          <div className="flex justify-center">
+          <div className="flex justify-center overflow-x-auto pb-2">
             <div
               id="id-card"
               className="w-[350px] h-[550px] bg-white border-4 border-primary rounded-lg p-6 text-black"
@@ -255,26 +255,26 @@ const IDCards = ({ user }) => {
 
       {/* Business Card Preview */}
       {cardData && cardType === 'business' && (
-        <div className="bg-card p-6 rounded-lg border border-border shadow-sm">
-          <div className="flex justify-between items-center mb-4">
+        <div className="bg-card p-4 sm:p-6 rounded-lg border border-border shadow-sm">
+          <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-4">
             <h3 className="text-xl font-semibold">Business Card</h3>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <button
                 onClick={() => downloadAsPNG('business-card-front', `${cardData.employee_id}-business-card`)}
-                className="bg-primary text-primary-foreground px-4 py-2 rounded text-sm hover:bg-primary/90"
+                className="w-full sm:w-auto bg-primary text-primary-foreground px-4 py-2 rounded text-sm hover:bg-primary/90"
               >
                 Download PNG
               </button>
               <button
                 onClick={() => downloadAsPDF('business-card-front', `${cardData.employee_id}-business-card`, 85.6, 53.98)}
-                className="bg-secondary text-secondary-foreground px-4 py-2 rounded text-sm hover:bg-secondary/80"
+                className="w-full sm:w-auto bg-secondary text-secondary-foreground px-4 py-2 rounded text-sm hover:bg-secondary/80"
               >
                 Download PDF
               </button>
             </div>
           </div>
           
-          <div className="flex justify-center">
+          <div className="flex justify-center overflow-x-auto pb-2">
             {/* Business Card Front */}
             <div
               id="business-card-front"

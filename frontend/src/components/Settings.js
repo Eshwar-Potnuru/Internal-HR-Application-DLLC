@@ -185,8 +185,8 @@ const Settings = ({ user }) => {
 
   return (
     <div className="space-y-6 fade-in" data-testid="settings-page">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-heading font-bold">Settings</h2>
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+        <h2 className="text-2xl sm:text-3xl font-heading font-bold">Settings</h2>
         {hasChanges && (
           <span className="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">
             Unsaved changes
@@ -201,7 +201,7 @@ const Settings = ({ user }) => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-4 font-medium text-sm whitespace-nowrap transition-colors ${
+              className={`px-4 sm:px-6 py-3 sm:py-4 font-medium text-sm whitespace-nowrap transition-colors ${
                 activeTab === tab.id
                   ? 'bg-primary text-primary-foreground'
                   : 'hover:bg-muted text-muted-foreground'
@@ -214,7 +214,7 @@ const Settings = ({ user }) => {
           ))}
         </div>
 
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           {/* Company Branding */}
           {activeTab === 'branding' && (
             <div className="space-y-6" data-testid="branding-settings">
@@ -318,7 +318,7 @@ const Settings = ({ user }) => {
                 {/* Color Preview */}
                 <div className="mt-6 p-4 bg-muted rounded-lg">
                   <p className="text-sm font-semibold mb-3">Preview</p>
-                  <div className="flex gap-4 items-center">
+                  <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
                     <div 
                       className="w-24 h-12 rounded flex items-center justify-center text-white text-sm font-semibold"
                       style={{ backgroundColor: settings.branding.primary_color || '#1c2a49' }}
@@ -343,11 +343,11 @@ const Settings = ({ user }) => {
                 </div>
               </div>
 
-              <div className="flex justify-end pt-4">
+                <div className="flex justify-end pt-4">
                 <button
                   onClick={() => handleSave('branding')}
                   disabled={saving}
-                  className="bg-primary text-primary-foreground px-8 py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
+                  className="w-full sm:w-auto bg-primary text-primary-foreground px-6 sm:px-8 py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
                   data-testid="save-branding-btn"
                 >
                   {saving ? 'Saving...' : 'Save Branding Settings'}
@@ -371,7 +371,7 @@ const Settings = ({ user }) => {
                       type="number"
                       value={settings.leave_policies.annual_leave_days || 14}
                       onChange={(e) => handleChange('leave_policies', 'annual_leave_days', parseInt(e.target.value))}
-                      className="w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
+                      className="w-full sm:w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
                       min="0"
                     />
                     <span className="text-sm text-muted-foreground">days/year</span>
@@ -384,7 +384,7 @@ const Settings = ({ user }) => {
                       type="number"
                       value={settings.leave_policies.sick_leave_days || 14}
                       onChange={(e) => handleChange('leave_policies', 'sick_leave_days', parseInt(e.target.value))}
-                      className="w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
+                      className="w-full sm:w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
                       min="0"
                     />
                     <span className="text-sm text-muted-foreground">days/year</span>
@@ -397,7 +397,7 @@ const Settings = ({ user }) => {
                       type="number"
                       value={settings.leave_policies.medical_leave_days || 60}
                       onChange={(e) => handleChange('leave_policies', 'medical_leave_days', parseInt(e.target.value))}
-                      className="w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
+                      className="w-full sm:w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
                       min="0"
                     />
                     <span className="text-sm text-muted-foreground">days/year</span>
@@ -410,7 +410,7 @@ const Settings = ({ user }) => {
                       type="number"
                       value={settings.leave_policies.maternity_leave_days || 112}
                       onChange={(e) => handleChange('leave_policies', 'maternity_leave_days', parseInt(e.target.value))}
-                      className="w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
+                      className="w-full sm:w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
                       min="0"
                     />
                     <span className="text-sm text-muted-foreground">days</span>
@@ -423,7 +423,7 @@ const Settings = ({ user }) => {
                       type="number"
                       value={settings.leave_policies.paternity_leave_days || 14}
                       onChange={(e) => handleChange('leave_policies', 'paternity_leave_days', parseInt(e.target.value))}
-                      className="w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
+                      className="w-full sm:w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
                       min="0"
                     />
                     <span className="text-sm text-muted-foreground">days</span>
@@ -436,7 +436,7 @@ const Settings = ({ user }) => {
                       type="number"
                       value={settings.leave_policies.compassionate_leave_days || 3}
                       onChange={(e) => handleChange('leave_policies', 'compassionate_leave_days', parseInt(e.target.value))}
-                      className="w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
+                      className="w-full sm:w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
                       min="0"
                     />
                     <span className="text-sm text-muted-foreground">days/year</span>
@@ -449,7 +449,7 @@ const Settings = ({ user }) => {
                       type="number"
                       value={settings.leave_policies.unpaid_leave_days || 30}
                       onChange={(e) => handleChange('leave_policies', 'unpaid_leave_days', parseInt(e.target.value))}
-                      className="w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
+                      className="w-full sm:w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
                       min="0"
                     />
                     <span className="text-sm text-muted-foreground">days/year</span>
@@ -479,14 +479,14 @@ const Settings = ({ user }) => {
                   </div>
 
                   {settings.leave_policies.carry_forward_enabled && (
-                    <div className="ml-4 p-4 bg-background rounded-lg border border-border">
+                    <div className="ml-0 sm:ml-4 p-4 bg-background rounded-lg border border-border">
                       <label className="block text-sm font-semibold mb-2">Maximum Carry Forward Days</label>
                       <div className="flex items-center gap-2">
                         <input
                           type="number"
                           value={settings.leave_policies.max_carry_forward_days || 5}
                           onChange={(e) => handleChange('leave_policies', 'max_carry_forward_days', parseInt(e.target.value))}
-                          className="w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
+                          className="w-full sm:w-20 px-3 py-2 border border-input rounded-md bg-background text-center"
                           min="0"
                         />
                         <span className="text-sm text-muted-foreground">days maximum</span>
@@ -516,7 +516,7 @@ const Settings = ({ user }) => {
                 <button
                   onClick={() => handleSave('leave_policies')}
                   disabled={saving}
-                  className="bg-primary text-primary-foreground px-8 py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
+                  className="w-full sm:w-auto bg-primary text-primary-foreground px-6 sm:px-8 py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
                 >
                   {saving ? 'Saving...' : 'Save Leave Policies'}
                 </button>
@@ -551,7 +551,7 @@ const Settings = ({ user }) => {
                       type="number"
                       value={settings.payroll.pay_day || 28}
                       onChange={(e) => handleChange('payroll', 'pay_day', parseInt(e.target.value))}
-                      className="w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
+                      className="w-full sm:w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
                       min="1"
                       max="31"
                     />
@@ -605,7 +605,7 @@ const Settings = ({ user }) => {
                   </div>
 
                   {settings.payroll.cpf_enabled && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-4 p-4 bg-background rounded-lg border border-border">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-0 sm:ml-4 p-4 bg-background rounded-lg border border-border">
                       <div>
                         <label className="block text-sm font-semibold mb-2">Employee CPF Rate</label>
                         <div className="flex items-center gap-2">
@@ -613,7 +613,7 @@ const Settings = ({ user }) => {
                             type="number"
                             value={settings.payroll.cpf_employee_rate || 20}
                             onChange={(e) => handleChange('payroll', 'cpf_employee_rate', parseFloat(e.target.value))}
-                            className="w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
+                            className="w-full sm:w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
                             step="0.5"
                             min="0"
                             max="100"
@@ -628,7 +628,7 @@ const Settings = ({ user }) => {
                             type="number"
                             value={settings.payroll.cpf_employer_rate || 17}
                             onChange={(e) => handleChange('payroll', 'cpf_employer_rate', parseFloat(e.target.value))}
-                            className="w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
+                            className="w-full sm:w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
                             step="0.5"
                             min="0"
                             max="100"
@@ -653,7 +653,7 @@ const Settings = ({ user }) => {
                         type="number"
                         value={settings.payroll.overtime_rate || 1.5}
                         onChange={(e) => handleChange('payroll', 'overtime_rate', parseFloat(e.target.value))}
-                        className="w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
+                        className="w-full sm:w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
                         step="0.25"
                         min="1"
                       />
@@ -682,7 +682,7 @@ const Settings = ({ user }) => {
                 <button
                   onClick={() => handleSave('payroll')}
                   disabled={saving}
-                  className="bg-primary text-primary-foreground px-8 py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
+                  className="w-full sm:w-auto bg-primary text-primary-foreground px-6 sm:px-8 py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
                 >
                   {saving ? 'Saving...' : 'Save Payroll Settings'}
                 </button>
@@ -754,7 +754,7 @@ const Settings = ({ user }) => {
                         type="number"
                         value={settings.working_hours.lunch_duration || 60}
                         onChange={(e) => handleChange('working_hours', 'lunch_duration', parseInt(e.target.value))}
-                        className="w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
+                        className="w-full sm:w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
                         min="0"
                       />
                       <span className="text-sm text-muted-foreground">mins</span>
@@ -785,7 +785,7 @@ const Settings = ({ user }) => {
                   </div>
 
                   {settings.working_hours.flexible_hours && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-4 p-4 bg-background rounded-lg border border-border">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ml-0 sm:ml-4 p-4 bg-background rounded-lg border border-border">
                       <div>
                         <label className="block text-sm font-semibold mb-2">Core Hours Start</label>
                         <input
@@ -822,7 +822,7 @@ const Settings = ({ user }) => {
                       type="number"
                       value={settings.working_hours.overtime_threshold || 44}
                       onChange={(e) => handleChange('working_hours', 'overtime_threshold', parseInt(e.target.value))}
-                      className="w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
+                      className="w-full sm:w-24 px-4 py-2 border border-input rounded-md bg-background text-center"
                       min="0"
                     />
                     <span className="text-sm text-muted-foreground">hours per week (hours beyond this count as overtime)</span>
@@ -833,7 +833,7 @@ const Settings = ({ user }) => {
               {/* Summary Card */}
               <div className="bg-primary/5 p-4 rounded-lg border border-primary/20">
                 <h4 className="font-semibold mb-2">Working Hours Summary</h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                   <div>
                     <p className="text-muted-foreground">Work Days</p>
                     <p className="font-semibold">{(settings.working_hours.work_days || []).length} days/week</p>
@@ -877,7 +877,7 @@ const Settings = ({ user }) => {
                 <button
                   onClick={() => handleSave('working_hours')}
                   disabled={saving}
-                  className="bg-primary text-primary-foreground px-8 py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
+                  className="w-full sm:w-auto bg-primary text-primary-foreground px-6 sm:px-8 py-2 rounded-md hover:bg-primary/90 disabled:opacity-50"
                 >
                   {saving ? 'Saving...' : 'Save Working Hours'}
                 </button>

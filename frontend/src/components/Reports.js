@@ -47,7 +47,7 @@ const Reports = ({ user }) => {
 
   return (
     <div className="space-y-6 fade-in" data-testid="reports-page">
-      <h2 className="text-3xl font-heading font-bold">Reports</h2>
+      <h2 className="text-2xl sm:text-3xl font-heading font-bold">Reports</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div className="bg-card p-6 rounded-lg border border-border shadow-sm hover-lift">
