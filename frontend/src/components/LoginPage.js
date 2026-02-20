@@ -135,11 +135,11 @@ const LoginPage = ({ onLogin }) => {
               <p className="font-semibold text-foreground mb-2">Demo Accounts (Password: <strong>demo123</strong>)</p>
               <ul className="space-y-1 text-muted-foreground text-xs">
                 {(demoUsers.length > 0 ? demoUsers : [
-                  { role: 'Director', email: 'director@dllc.com' },
+                  { role: 'Director', email: 'anil.lalwani@dllc.com' },
                   { role: 'Admin', email: 'admin@dllc.com' },
                   { role: 'HR', email: 'hr@dllc.com' },
                   { role: 'Finance', email: 'finance@dllc.com' },
-                  { role: 'Employee', email: 'john.doe@dllc.com' }
+                  { role: 'Employee', email: 'eshwar.p@dllc.com' }
                 ]).slice(0, 6).map((user) => (
                   <li key={user.email}>• <strong>{user.role}:</strong> {user.email}</li>
                 ))}

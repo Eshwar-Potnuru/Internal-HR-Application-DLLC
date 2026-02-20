@@ -10,9 +10,9 @@ import json
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 
 # Test credentials
-DIRECTOR_EMAIL = "director@dllc.com"
+DIRECTOR_EMAIL = "anil.lalwani@dllc.com"
 ADMIN_EMAIL = "admin@dllc.com"
-EMPLOYEE_EMAIL = "john.doe@dllc.com"
+EMPLOYEE_EMAIL = "eshwar.p@dllc.com"
 PASSWORD = "demo123"
 
 

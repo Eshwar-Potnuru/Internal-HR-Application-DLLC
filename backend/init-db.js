@@ -113,6 +113,18 @@ CREATE TABLE IF NOT EXISTS audit_logs (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Company Settings table
+CREATE TABLE IF NOT EXISTS company_settings (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  category VARCHAR(100) NOT NULL,
+  setting_key VARCHAR(100) NOT NULL,
+  setting_value TEXT,
+  value_type VARCHAR(20) DEFAULT 'string',
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_by UUID REFERENCES users(id) ON DELETE SET NULL,
+  UNIQUE (category, setting_key)
+);
+
 -- Create indexes
 CREATE INDEX IF NOT EXISTS idx_employees_user_id ON employees(user_id);
 CREATE INDEX IF NOT EXISTS idx_attendance_employee_id ON attendance(employee_id);
@@ -122,6 +134,7 @@ CREATE INDEX IF NOT EXISTS idx_salary_employee_id ON salary_payroll(employee_id)
 CREATE INDEX IF NOT EXISTS idx_documents_employee_id ON documents(employee_id);
 CREATE INDEX IF NOT EXISTS idx_tickets_employee_id ON tickets(employee_id);
 CREATE INDEX IF NOT EXISTS idx_audit_logs_user_id ON audit_logs(user_id);
+CREATE INDEX IF NOT EXISTS idx_company_settings_category ON company_settings(category);
 `;
 
 async function initializeDatabase() {

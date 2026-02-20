@@ -9,13 +9,13 @@ const router = express.Router();
 
 const DEMO_USERS = [
   {
-    email: 'director@dllc.com',
+    email: 'anil.lalwani@dllc.com',
     password: 'demo123',
     role: 'Director',
     full_name: 'Anil Lalwani',
     employee_id: 'DLLC001',
     department: 'Executive',
-    phone: '+65 6535 0959',
+    phone: '+65 9023 4787',
     join_date: '2010-01-15'
   },
   {
@@ -49,14 +49,15 @@ const DEMO_USERS = [
     join_date: '2017-09-05'
   },
   {
-    email: 'john.doe@dllc.com',
+    email: 'eshwar.p@dllc.com',
     password: 'demo123',
     role: 'Employee',
-    full_name: 'John Doe',
+    full_name: 'Eshwar P',
     employee_id: 'DLLC101',
-    department: 'Legal',
-    phone: '+65 6557 0220',
-    join_date: '2020-01-15'
+    department: 'Software & AI',
+    phone: '+65 8058 5329',
+    join_date: '2024-11-01',
+    notes: 'Robotics & AI Engineer, working on this project.'
   },
   {
     email: 'jane.smith@dllc.com',
@@ -121,16 +122,25 @@ router.post('/load-users', async (req, res) => {
       try {
         await client.query('BEGIN');
 
-        // Check if user already exists
-        const existing = await client.query('SELECT id FROM users WHERE email = $1', [demoUser.email]);
+        // Check if user already exists by email OR canonical employee_id
+        const existing = await client.query(
+          `SELECT u.id, u.email
+           FROM users u
+           LEFT JOIN employees e ON e.user_id = u.id
+           WHERE u.email = $1 OR e.employee_id = $2
+           LIMIT 1`,
+          [demoUser.email, demoUser.employee_id]
+        );
         const password_hash = await bcrypt.hash(demoUser.password, 10);
         
         if (existing.rows.length > 0) {
           const userId = existing.rows[0].id;
+          const existingEmail = existing.rows[0].email;
+          const needsProfileMigration = existingEmail !== demoUser.email;
 
           await client.query(
-            'UPDATE users SET password_hash = $1, role = $2 WHERE id = $3',
-            [password_hash, demoUser.role, userId]
+            'UPDATE users SET email = $1, password_hash = $2, role = $3 WHERE id = $4',
+            [demoUser.email, password_hash, demoUser.role, userId]
           );
 
           const existingEmployee = await client.query(
@@ -139,14 +149,17 @@ router.post('/load-users', async (req, res) => {
           );
 
           if (existingEmployee.rows.length > 0) {
-            await client.query(
-              'UPDATE employees SET full_name = $1, employee_id = $2, department = $3, phone = $4, join_date = $5 WHERE user_id = $6',
-              [demoUser.full_name, demoUser.employee_id, demoUser.department, demoUser.phone, demoUser.join_date, userId]
-            );
+            // Preserve profile edits by default; only migrate profile when account email mapping changes
+            if (needsProfileMigration) {
+              await client.query(
+                'UPDATE employees SET full_name = $1, employee_id = $2, department = $3, phone = $4, join_date = $5, notes = $6 WHERE user_id = $7',
+                [demoUser.full_name, demoUser.employee_id, demoUser.department, demoUser.phone, demoUser.join_date, demoUser.notes || null, userId]
+              );
+            }
           } else {
             await client.query(
-              'INSERT INTO employees (user_id, full_name, employee_id, department, phone, join_date) VALUES ($1, $2, $3, $4, $5, $6)',
-              [userId, demoUser.full_name, demoUser.employee_id, demoUser.department, demoUser.phone, demoUser.join_date]
+              'INSERT INTO employees (user_id, full_name, employee_id, department, phone, join_date, notes) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+              [userId, demoUser.full_name, demoUser.employee_id, demoUser.department, demoUser.phone, demoUser.join_date, demoUser.notes || null]
             );
           }
 
@@ -164,8 +177,8 @@ router.post('/load-users', async (req, res) => {
           const user = userResult.rows[0];
 
           await client.query(
-            'INSERT INTO employees (user_id, full_name, employee_id, department, phone, join_date) VALUES ($1, $2, $3, $4, $5, $6)',
-            [user.id, demoUser.full_name, demoUser.employee_id, demoUser.department, demoUser.phone, demoUser.join_date]
+            'INSERT INTO employees (user_id, full_name, employee_id, department, phone, join_date, notes) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+            [user.id, demoUser.full_name, demoUser.employee_id, demoUser.department, demoUser.phone, demoUser.join_date, demoUser.notes || null]
           );
 
           createdUsers.push({
@@ -190,7 +203,7 @@ router.post('/load-users', async (req, res) => {
       updated_count: updatedUsers.length,
       created_users: createdUsers,
       updated_users: updatedUsers,
-      message: `Demo users are ready. Use password: demo123 for all accounts.`
+      message: `Demo users are ready. Use password: demo123 for all accounts. Existing profiles are preserved unless email migration is required.`
     });
   } catch (error) {
     console.error('Load demo users error:', error);
