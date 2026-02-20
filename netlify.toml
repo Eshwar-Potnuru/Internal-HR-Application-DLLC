@@ -1,5 +1,5 @@
 [build]
-  command = "cd frontend && npm install --legacy-peer-deps && npx craco build"
+  command = "cd frontend && npm ci --legacy-peer-deps && npx craco build --verbose"
   publish = "frontend/build"
 
 [[redirects]]
@@ -8,6 +8,7 @@
   status = 200
 
 [context.production.environment]
+  NODE_VERSION = "18"
   REACT_APP_BACKEND_URL = "https://your-backend-url-here.com"
 
 [context.deploy-preview.environment]
