@@ -11,17 +11,8 @@ services:
       - key: PORT
         value: 8001
       - key: DATABASE_URL
-        fromDatabase:
-          name: dllc-hr-db
-          property: connectionString
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: CORS_ORIGINS
         value: "*"
-      - key: AWS_REGION
-        value: us-east-1
-
-  - type: pserv
-    name: dllc-hr-db
-    plan: standard
-    region: oregon
