@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { employeesService, attendanceService, leavesService, announcementsService } from '../services/api';
 import { toast } from 'sonner';
 
@@ -12,11 +12,48 @@ const Dashboard = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [attendanceToday, setAttendanceToday] = useState(null);
 
+  const loadDashboardData = useCallback(async () => {
+    try {
+      setLoading(true);
+      
+      if (user.role === 'Employee') {
+        // Employee dashboard
+        const [attendanceRes, announcementsRes] = await Promise.all([
+          attendanceService.getToday(),
+          announcementsService.getAll()
+        ]);
+        
+        setAttendanceToday(attendanceRes.data);
+        setStats(prev => ({
+          ...prev,
+          announcements: announcementsRes.data.slice(0, 3)
+        }));
+      } else {
+        // Admin/HR/Director dashboard
+        const [employeesRes, leavesRes, announcementsRes] = await Promise.all([
+          employeesService.getAll(),
+          leavesService.getAll({ status: 'Pending' }),
+          announcementsService.getAll()
+        ]);
+        
+        setStats({
+          totalEmployees: employeesRes.data.length,
+          pendingLeaves: leavesRes.data.length,
+          todayAttendance: 0,
+          announcements: announcementsRes.data.slice(0, 3)
+        });
+      }
+    } catch (error) {
+      toast.error('Failed to load dashboard data');
+    } finally {
+      setLoading(false);
+    }
+  }, [user.role]);
+
   useEffect(() => {
     loadDashboardData();
-  }, [user]);
+  }, [loadDashboardData, user]);
 
-  const loadDashboardData = async () => {
     try {
       setLoading(true);
       

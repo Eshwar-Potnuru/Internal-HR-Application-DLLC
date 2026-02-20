@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { attendanceService, employeesService } from '../services/api';
 import { toast } from 'sonner';
 import { formatDateTime } from '../utils/helpers';
@@ -16,11 +16,33 @@ const Attendance = ({ user }) => {
   const [filterEmployee, setFilterEmployee] = useState('');
   const [employees, setEmployees] = useState([]);
 
+  const loadData = useCallback(async () => {
+    try {
+      setLoading(true);
+      const [recordsRes, todayRes] = await Promise.all([
+        attendanceService.getAll(),
+        attendanceService.getToday()
+      ]);
+      setRecords(recordsRes.data);
+      setAllRecords(recordsRes.data);
+      setTodayStatus(todayRes.data);
+
+      // Load employees for filter (admin/HR only)
+      if (['Admin', 'Director', 'HR'].includes(user.role)) {
+        const empRes = await employeesService.getAll();
+        setEmployees(empRes.data);
+      }
+    } catch (error) {
+      toast.error('Failed to load attendance data');
+    } finally {
+      setLoading(false);
+    }
+  }, [user.role]);
+
   useEffect(() => {
     loadData();
-  }, []);
+  }, [loadData]);
 
-  const loadData = async () => {
     try {
       setLoading(true);
       const [recordsRes, todayRes] = await Promise.all([

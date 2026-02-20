@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { settingsService } from '../services/api';
 import { toast } from 'sonner';
 
@@ -14,11 +14,31 @@ const Settings = ({ user }) => {
   });
   const [hasChanges, setHasChanges] = useState(false);
 
-  useEffect(() => {
-    loadSettings();
+  const loadSettings = useCallback(async () => {
+    try {
+      setLoading(true);
+      const response = await settingsService.getAll();
+      
+      // If no settings exist, initialize defaults
+      if (Object.keys(response.data).length === 0) {
+        await settingsService.initialize();
+        const newResponse = await settingsService.getAll();
+        setSettings(parseSettings(newResponse.data));
+      } else {
+        setSettings(parseSettings(response.data));
+      }
+    } catch (error) {
+      console.error('Load settings error:', error);
+      // Initialize with defaults if API fails
+      initializeDefaults();
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  const loadSettings = async () => {
+  useEffect(() => {
+    loadSettings();
+  }, [loadSettings]);
     try {
       setLoading(true);
       const response = await settingsService.getAll();

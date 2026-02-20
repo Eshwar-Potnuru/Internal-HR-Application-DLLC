@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { employeesService, attendanceService, leavesService, salaryService, announcementsService } from '../services/api';
 import { toast } from 'sonner';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
@@ -16,11 +16,48 @@ const AdvancedDashboard = ({ user, onNavigate }) => {
   });
   const [attendanceToday, setAttendanceToday] = useState(null);
 
+  const loadAllData = useCallback(async () => {
+    try {
+      setLoading(true);
+      
+      if (user.role === 'Employee') {
+        const [attendanceRes, announcementsRes] = await Promise.all([
+          attendanceService.getToday(),
+          announcementsService.getAll()
+        ]);
+        setAttendanceToday(attendanceRes.data);
+        setStats(prev => ({ ...prev, announcements: announcementsRes.data }));
+      } else {
+        const [employeesRes, leavesRes, announcementsRes, salaryRes] = await Promise.all([
+          employeesService.getAll(),
+          leavesService.getAll(),
+          announcementsService.getAll(),
+          salaryService.getAll().catch(() => ({ data: [] }))
+        ]);
+        
+        // Handle pagination response
+        const leavesData = leavesRes.data.data || leavesRes.data;
+        const salaryData = salaryRes.data.data || salaryRes.data || [];
+        
+        setStats({
+          employees: employeesRes.data,
+          leaves: Array.isArray(leavesData) ? leavesData : [],
+          announcements: announcementsRes.data,
+          salary: Array.isArray(salaryData) ? salaryData : []
+        });
+      }
+    } catch (error) {
+      console.error('Dashboard load error:', error);
+      toast.error('Failed to load dashboard data');
+    } finally {
+      setLoading(false);
+    }
+  }, [user.role]);
+
   useEffect(() => {
     loadAllData();
-  }, []);
+  }, [loadAllData]);
 
-  const loadAllData = async () => {
     try {
       setLoading(true);
       

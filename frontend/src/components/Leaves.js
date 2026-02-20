@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { leavesService } from '../services/api';
 import { toast } from 'sonner';
 import { formatDate, getStatusColor } from '../utils/helpers';
@@ -16,11 +16,33 @@ const Leaves = ({ user }) => {
     reason: ''
   });
 
+  const loadLeaves = useCallback(async () => {
+    try {
+      setLoading(true);
+      const params = {
+        page: pagination.page,
+        limit: pagination.limit,
+        ...filters
+      };
+      const response = await leavesService.getAll(params);
+      
+      if (response.data.data) {
+        setLeaves(response.data.data);
+        setPagination(prev => ({ ...prev, ...response.data.pagination }));
+      } else {
+        setLeaves(response.data);
+      }
+    } catch (error) {
+      toast.error('Failed to load leaves');
+    } finally {
+      setLoading(false);
+    }
+  }, [pagination.page, pagination.limit, filters]);
+
   useEffect(() => {
     loadLeaves();
-  }, [pagination.page, filters]);
+  }, [loadLeaves]);
 
-  const loadLeaves = async () => {
     try {
       setLoading(true);
       const params = {
