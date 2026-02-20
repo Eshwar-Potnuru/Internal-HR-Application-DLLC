@@ -1,6 +1,7 @@
 [build]
   command = "cd frontend && npm ci --legacy-peer-deps && npx craco build --verbose"
   publish = "frontend/build"
+  environment = { CI = "false" }
 
 [[redirects]]
   from = "/*"
