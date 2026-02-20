@@ -129,11 +129,12 @@ async function initializeDatabase() {
     console.log('Initializing database schema...');
     await pool.query(schema);
     console.log('Database schema initialized successfully!');
-    process.exit(0);
   } catch (error) {
-    console.error('Error initializing database:', error);
-    process.exit(1);
+    console.error('Warning: Database initialization failed:', error.message);
+    console.error('Server will attempt to start anyway. Database must be available for app to work.');
+  } finally {
+    await pool.end();
   }
 }
 
-initializeDatabase();
+initializeDatabase().catch(err => console.error('Fatal error:', err));
