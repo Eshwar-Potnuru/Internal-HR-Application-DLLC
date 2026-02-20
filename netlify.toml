@@ -1,5 +1,5 @@
 [build]
-  command = "cd frontend && npm install && npm run build"
+  command = "cd frontend && npm install && npx craco build"
   publish = "frontend/build"
 
 [[redirects]]
