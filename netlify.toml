@@ -10,10 +10,10 @@
 
 [context.production.environment]
   NODE_VERSION = "18"
-  REACT_APP_BACKEND_URL = "https://your-backend-url-here.com"
+  REACT_APP_BACKEND_URL = "https://dllc-hr-backend-production-2169.up.railway.app"
 
 [context.deploy-preview.environment]
-  REACT_APP_BACKEND_URL = "https://your-backend-url-here.com"
+  REACT_APP_BACKEND_URL = "https://dllc-hr-backend-production-2169.up.railway.app"
 
 [context.branch-deploy.environment]
-  REACT_APP_BACKEND_URL = "https://your-backend-url-here.com"
+  REACT_APP_BACKEND_URL = "https://dllc-hr-backend-production-2169.up.railway.app"
