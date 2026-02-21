@@ -101,7 +101,10 @@ export const leavesService = {
   create: (data) => api.post('/api/leaves', data),
   getAll: (params) => api.get('/api/leaves', { params }),
   approve: (id, comments) => api.patch(`/api/leaves/${id}/approve`, { comments }),
-  reject: (id, comments) => api.patch(`/api/leaves/${id}/reject`, { comments })
+  reject: (id, comments) => api.patch(`/api/leaves/${id}/reject`, { comments }),
+  uploadCertificate: (formData) => api.post('/api/leaves/upload-certificate', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
 };
 
 export const salaryService = {

@@ -1,10 +1,44 @@
 const express = require('express');
+const multer = require('multer');
 const pool = require('../db');
 const { authenticate, authorize } = require('../middleware/auth');
 const { auditLog } = require('../middleware/audit');
 const { sendLeaveApprovalEmail } = require('../utils/email');
 
 const router = express.Router();
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 }
+});
+
+// Upload leave certificate/document
+router.post('/upload-certificate', authenticate, upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const allowedTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'image/jpeg',
+      'image/png',
+      'image/gif'
+    ];
+
+    if (!allowedTypes.includes(req.file.mimetype)) {
+      return res.status(400).json({ error: 'Invalid file type. Allowed: PDF, DOC, DOCX, JPG, PNG, GIF' });
+    }
+
+    const documentUrl = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+    res.json({ document_url: documentUrl, file_name: req.file.originalname });
+  } catch (error) {
+    console.error('Upload leave certificate error:', error);
+    res.status(500).json({ error: 'Failed to upload certificate' });
+  }
+});
 
 // Apply for leave
 router.post('/', authenticate, async (req, res) => {

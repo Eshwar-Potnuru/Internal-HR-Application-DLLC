@@ -25,11 +25,22 @@ const S3_BUCKET = process.env.S3_BUCKET_NAME || 'dllc-hr-documents';
 // Upload document
 router.post('/upload', authenticate, upload.single('file'), async (req, res) => {
   try {
-    const { employee_id } = req.user;
+    let { employee_id } = req.user;
     const { category } = req.body;
 
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    if (!employee_id) {
+      const employeeResult = await pool.query('SELECT id FROM employees WHERE user_id = $1', [req.user.id]);
+      if (employeeResult.rows.length > 0) {
+        employee_id = employeeResult.rows[0].id;
+      }
+    }
+
+    if (!employee_id) {
+      return res.status(400).json({ error: 'No employee profile found for this user' });
     }
 
     // For MVP, store files locally if S3 is not configured

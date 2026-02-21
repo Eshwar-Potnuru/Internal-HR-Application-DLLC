@@ -13,8 +13,11 @@ const Leaves = ({ user }) => {
     leave_type: 'Annual',
     start_date: '',
     end_date: '',
-    reason: ''
+    reason: '',
+    document_url: ''
   });
+  const [certificateFile, setCertificateFile] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
@@ -47,13 +50,31 @@ const Leaves = ({ user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await leavesService.create(formData);
+      setSubmitting(true);
+      let documentUrl = formData.document_url || '';
+
+      if (certificateFile) {
+        const uploadFormData = new FormData();
+        uploadFormData.append('file', certificateFile);
+        const uploadResponse = await leavesService.uploadCertificate(uploadFormData);
+        documentUrl = uploadResponse?.data?.document_url || '';
+      }
+
+      if (formData.leave_type === 'Medical' && !documentUrl) {
+        toast.error('Medical certificate required for medical leave');
+        return;
+      }
+
+      await leavesService.create({ ...formData, document_url: documentUrl });
       toast.success('Leave application submitted!');
       setShowForm(false);
-      setFormData({ leave_type: 'Annual', start_date: '', end_date: '', reason: '' });
+      setFormData({ leave_type: 'Annual', start_date: '', end_date: '', reason: '', document_url: '' });
+      setCertificateFile(null);
       loadLeaves();
     } catch (error) {
       toast.error(error.response?.data?.error || 'Failed to apply for leave');
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -88,12 +109,12 @@ const Leaves = ({ user }) => {
 
   return (
     <div className="space-y-6 fade-in" data-testid="leaves-page">
-      <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-heading font-bold">Leave Management</h2>
+      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
+        <h2 className="text-2xl sm:text-3xl font-heading font-bold">Leave Management</h2>
         <button
           onClick={() => setShowForm(true)}
           data-testid="apply-leave-btn"
-          className="bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 flex items-center gap-2"
+          className="w-full sm:w-auto bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 flex items-center justify-center gap-2"
         >
           <span>➕</span>
           Apply for Leave
@@ -102,7 +123,7 @@ const Leaves = ({ user }) => {
 
       {/* Filters */}
       <div className="bg-card p-4 rounded-lg border border-border">
-        <div className="flex gap-4 items-center">
+        <div className="flex flex-col sm:flex-row gap-4 sm:items-end">
           <div>
             <label className="text-sm font-semibold mb-1 block">Status</label>
             <select
@@ -118,7 +139,7 @@ const Leaves = ({ user }) => {
           </div>
           <button
             onClick={() => { setFilters({ status: '' }); setPagination(prev => ({ ...prev, page: 1 })); }}
-            className="mt-6 px-4 py-2 bg-muted rounded-md text-sm hover:bg-muted/80"
+            className="w-full sm:w-auto sm:mt-6 px-4 py-2 bg-muted rounded-md text-sm hover:bg-muted/80"
           >
             Clear Filters
           </button>
@@ -175,11 +196,31 @@ const Leaves = ({ user }) => {
                 required
               />
             </div>
+            <div>
+              <label className="block text-sm font-semibold mb-2">
+                Supporting Document {formData.leave_type === 'Medical' ? '(Required)' : '(Optional)'}
+              </label>
+              <input
+                type="file"
+                onChange={(e) => setCertificateFile(e.target.files?.[0] || null)}
+                className="w-full px-4 py-2 border border-input rounded-md bg-background"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif"
+              />
+              <p className="text-xs text-muted-foreground mt-1">
+                Upload PDF, DOC, DOCX, JPG, PNG or GIF (max 10MB)
+              </p>
+              {certificateFile && (
+                <p className="text-xs text-foreground mt-1">Selected: {certificateFile.name}</p>
+              )}
+              {formData.leave_type === 'Medical' && (
+                <p className="text-xs text-red-600 mt-1">Medical certificate required for medical leave.</p>
+              )}
+            </div>
             <div className="flex gap-3">
-              <button type="submit" className="bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90">
-                Submit Application
+              <button type="submit" disabled={submitting} className="bg-primary text-primary-foreground px-6 py-2 rounded-md hover:bg-primary/90 disabled:opacity-50">
+                {submitting ? 'Submitting...' : 'Submit Application'}
               </button>
-              <button type="button" onClick={() => setShowForm(false)} className="bg-muted px-6 py-2 rounded-md hover:bg-muted/80">
+              <button type="button" onClick={() => { setShowForm(false); setCertificateFile(null); }} className="bg-muted px-6 py-2 rounded-md hover:bg-muted/80">
                 Cancel
               </button>
             </div>
@@ -195,13 +236,15 @@ const Leaves = ({ user }) => {
         {leaves.length > 0 ? (
           <>
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[1100px]">
                 <thead className="bg-muted">
                   <tr>
                     <th className="px-6 py-3 text-left text-sm font-semibold">Employee</th>
                     <th className="px-6 py-3 text-left text-sm font-semibold">Type</th>
                     <th className="px-6 py-3 text-left text-sm font-semibold">Start Date</th>
                     <th className="px-6 py-3 text-left text-sm font-semibold">End Date</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold">Reason</th>
+                    <th className="px-6 py-3 text-left text-sm font-semibold">Certificate</th>
                     <th className="px-6 py-3 text-left text-sm font-semibold">Days</th>
                     <th className="px-6 py-3 text-left text-sm font-semibold">Status</th>
                     {['Admin', 'Director', 'HR'].includes(user.role) && (
@@ -218,6 +261,23 @@ const Leaves = ({ user }) => {
                         <td className="px-6 py-4">{leave.leave_type}</td>
                         <td className="px-6 py-4">{formatDate(leave.start_date)}</td>
                         <td className="px-6 py-4">{formatDate(leave.end_date)}</td>
+                        <td className="px-6 py-4 max-w-[280px]">
+                          <p className="text-sm truncate" title={leave.reason || 'No reason provided'}>
+                            {leave.reason || 'No reason provided'}
+                          </p>
+                        </td>
+                        <td className="px-6 py-4">
+                          {leave.document_url ? (
+                            <button
+                              onClick={() => window.open(leave.document_url, '_blank')}
+                              className="text-primary hover:underline text-sm"
+                            >
+                              View File
+                            </button>
+                          ) : (
+                            <span className="text-muted-foreground text-sm">-</span>
+                          )}
+                        </td>
                         <td className="px-6 py-4">{days} day{days > 1 ? 's' : ''}</td>
                         <td className="px-6 py-4">
                           <span className={`px-2 py-1 rounded-full text-xs ${getStatusColor(leave.status)}`}>
@@ -251,11 +311,11 @@ const Leaves = ({ user }) => {
             
             {/* Pagination */}
             {pagination.totalPages > 1 && (
-              <div className="px-6 py-4 border-t border-border flex items-center justify-between">
+              <div className="px-6 py-4 border-t border-border flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <p className="text-sm text-muted-foreground">
                   Showing {((pagination.page - 1) * pagination.limit) + 1} to {Math.min(pagination.page * pagination.limit, pagination.total)} of {pagination.total} results
                 </p>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2">
                   <button
                     onClick={() => setPagination(prev => ({ ...prev, page: prev.page - 1 }))}
                     disabled={pagination.page === 1}

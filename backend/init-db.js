@@ -135,6 +135,10 @@ CREATE INDEX IF NOT EXISTS idx_documents_employee_id ON documents(employee_id);
 CREATE INDEX IF NOT EXISTS idx_tickets_employee_id ON tickets(employee_id);
 CREATE INDEX IF NOT EXISTS idx_audit_logs_user_id ON audit_logs(user_id);
 CREATE INDEX IF NOT EXISTS idx_company_settings_category ON company_settings(category);
+
+-- Ensure file URL columns support large data URLs when S3 is not configured
+ALTER TABLE documents ALTER COLUMN file_url TYPE TEXT;
+ALTER TABLE leaves ALTER COLUMN document_url TYPE TEXT;
 `;
 
 async function initializeDatabase() {
